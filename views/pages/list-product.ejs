@@ -1,19 +1,98 @@
-<!-- PAGE-HEADER -->
-<div class="page-header">
-    <h1 class="page-title"></h1>
-    <div>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0)">Product Manager</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Products</li>
-        </ol>
-    </div>
-</div>
-<!-- PAGE-HEADER END -->
+<!-- CONTAINER -->
+<div class="main-container container-fluid">
 
-<!-- ROW-1 OPEN -->
-<!-- Row -->
-<div class="row ">
-    <div class="col-md-12">
+    <!-- PAGE-HEADER -->
+    <div class="page-header">
+        <h1 class="page-title">Product List</h1>
+        <div>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="javascript:void(0)">Product Manager</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Product List</li>
+            </ol>
+        </div>
     </div>
+    <!-- PAGE-HEADER END -->
+
+    <div class="hide">
+        <ul>
+            <li class="list-group-item border-0 p-0 categoryListTemplate"> <a href="javascript:void(0)"><i class="fe fe-chevron-right"></i> Mens </a><span class="product-label">22</span> </li>
+        </ul>
+        <div class="col-md-6 col-xl-4 col-sm-6 productListTemplate">
+            <div class="card">
+                <div class="product-grid6">
+                    <div class="product-image6 p-5">
+                        <ul class="icons">
+                            <li>
+                                <a href="javascript:void(0);" class="btn btn-primary"> <i class="fe fe-eye">  </i> </a>
+                            </li>
+                            <li><a href="javascript:void(0);" class="btn btn-success"><i  class="fe fe-edit"></i></a></li>
+                            <li><a href="javascript:void(0)" class="btn btn-danger"><i class="fe fe-x"></i></a></li>
+                        </ul>
+                        <a href="javascript:void(0);" class="bg-light">
+                            <img class="img-fluid br-7 w-100 productImage" src="../assets/images/pngs/9.jpg" alt="img">
+                        </a>
+                    </div>
+                    <div class="card-body pt-0">
+                        <div class="product-content text-center">
+                            <h1 class="title fw-bold fs-20"><a href="javascript:void(0);" class="productName">Candy Pure Rose Water</a></h1>
+                            <div class="price productPrice">Rs.0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ROW-1 OPEN -->
+    <div class="row row-cards">
+        <div class="col-xl-3 col-lg-4">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Categories</div>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group categoryListGroup">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- COL-END -->
+        <div class="col-xl-9 col-lg-8">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="card p-0">
+                        <div class="card-body p-4">
+                            <div class="row">
+                                <div class="col-xl-5 col-lg-8 col-md-8 col-sm-8">
+                                    <div class="input-group d-flex w-100 float-start">
+                                        <input type="text" class="form-control border-end-0 my-2" placeholder="Search ...">
+                                        <button class="btn input-group-text bg-transparent border-start-0 text-muted my-2">
+                                            <i class="fe fe-search text-muted" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-xl-3 col-lg-12">
+                                    <a href="#add-product" class="btn btn-primary btn-block float-end my-2"><i class="fa fa-plus-square me-2"></i>New Product</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tab-11">
+                    <div class="row productListGroup">
+                    </div>
+                </div>
+            </div>
+            <!-- COL-END -->
+        </div>
+        <!-- ROW-1 CLOSED -->
+    </div>
+    <!-- ROW-1 END -->
 </div>
-<!-- /Row -->
+<!-- CONTAINER CLOSED -->

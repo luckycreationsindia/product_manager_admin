@@ -1,4 +1,5 @@
 function hideGBlockMessage(msg, ele) {
+    $("#global-loader").fadeOut("slow");
     return;
     let blockele = null;
     try {
@@ -27,6 +28,7 @@ function hideGBlockMessage(msg, ele) {
 }
 
 function showGBlockMessage(message, ele) {
+    $("#global-loader").fadeIn("slow");
     return;
     if (!message) message = "Loading...";
     let blockele = null;
@@ -272,6 +274,7 @@ function showConfirmationDialog(title, body, cb, submitText, icon) {
 }
 
 function uploadFile(file, cb) {
+    if(!file) return cb(null, null);
     let formData = new FormData();
     formData.append("file", file);
     $.ajax({

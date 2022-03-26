@@ -5,6 +5,7 @@ let currentUser = null;
 let currentUserRole = 0;
 let firstLoadDone = false;
 let apiUrl = "http://localhost:3030/";
+let imageHostUrl = "https://product-manager-test-4d3a765ca6d515c15.s3.amazonaws.com/";
 
 $.ajaxSetup({
     xhrFields: {
@@ -14,6 +15,7 @@ $.ajaxSetup({
 });
 
 $(window).on('hashchange', function () {
+    console.log("WINDOW HASH CHANGED");
     loadHashChange();
 });
 
@@ -21,6 +23,7 @@ function loadHashChange() {
     console.log("HASH CHANGE CALLED");
     $(".slide-item").removeClass('active');
     if (currentUserId === 0) {
+        hideLoggedInItems();
         console.log("USER ID 0");
         $(".pageloader").html('');
         if(!firstLoadDone) {
@@ -51,7 +54,7 @@ function loadHashChange() {
                         }
                     });
                 } else {
-                    loadHashChange();
+                    //loadHashChange();
                 }
             });
         } else {
@@ -86,6 +89,16 @@ function loadHashChange() {
     }
 }
 
+function hideLoggedInItems() {
+    $(".loggedInItem").addClass('hide');
+    $(".main-content").removeClass('app-content');
+}
+
+function showLoggedInItems() {
+    $(".loggedInItem").removeClass('hide');
+    $(".main-content").addClass('app-content');
+}
+
 function cleanHash() {
     let page = window.location.hash;
     page = page.substr(1, page.length);
@@ -95,6 +108,7 @@ function cleanHash() {
 
 function getPage(cb) {
     let page = currentHash;
+    console.log("GET PAGE:" + page);
     $.ajax({
         url: "page/" + page,
         type: 'GET',
@@ -110,6 +124,9 @@ function getPage(cb) {
                 } else if (page === "add-product") {
                     console.log("Add Product");
                     ProductManager.init();
+                } else if (page === "list-product") {
+                    console.log("List Products");
+                    ProductManager.initProductList();
                 } else if (page === "usermanager") {
                 }
                 hideGBlockMessage();

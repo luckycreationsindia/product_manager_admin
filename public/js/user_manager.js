@@ -12,6 +12,7 @@ function getUserDetails(cb) {
 				currentUser = res.data;
 				afterLogin();
 				hideGBlockMessage();
+				showLoggedInItems();
 				loadHashChange();
 				if(cb) cb(true);
 			} else {
