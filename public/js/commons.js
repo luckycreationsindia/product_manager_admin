@@ -273,6 +273,54 @@ function showConfirmationDialog(title, body, cb, submitText, icon) {
     modal.modal('show');
 }
 
+function getFileFromUrl(url, name, cb, defaultType = 'image/jpeg') {
+    $.ajax({
+        url:url,
+        dataType: 'binary',
+        xhrFields: {
+            withCredentials: true,
+            'responseType': 'blob'
+        },
+        crossDomain: true,
+        success: function(blob, status, xhr) {
+            let urlBlob = URL.createObjectURL(blob);
+            console.log(blob);
+            console.log(urlBlob);
+            let res = new File([blob], name, {
+                type: blob.type || defaultType,
+            });
+            console.log(res);
+            cb(res);
+        }
+    });
+    // let req = new XMLHttpRequest();
+    // req.open("GET", url, true);
+    // req.responseType = "blob";
+    // req.withCredentials = true;
+    //
+    // req.onload = function (event) {
+    //     let blob = req.response;
+    //     console.log(blob);
+    //     let res = new File([blob], name, {
+    //         type: blob.type || defaultType,
+    //     });
+    //     console.log(res);
+    //     cb(res);
+    // };
+    //
+    // req.send();
+    // const response = await fetch(url, {
+    //     mode: 'cors',
+    //     headers: {
+    //         'Access-Control-Allow-Origin':'*'
+    //     }
+    // })
+    // const data = await response.blob()
+    // return new File([data], name, {
+    //     type: data.type || defaultType,
+    // })
+}
+
 function uploadFile(file, cb) {
     if(!file) return cb(null, null);
     let formData = new FormData();

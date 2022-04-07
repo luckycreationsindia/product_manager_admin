@@ -1,6 +1,25 @@
 //Product Manager Start
 
+let clickedProduct = null;
+let isUpdateProduct = false;
+
 let ProductManager = (function () {
+	let imageSelector;
+
+	function preFillProductData() {
+		if(!isUpdateProduct) return;
+		let modal = $('#add-product-form');
+		modal.find('[name="name"]').val(clickedProduct.name);
+		modal.find('[name="description"]').val(clickedProduct.description);
+		modal.find('[name="price"]').val(clickedProduct.price);
+		modal.find('[name="category"]').val(clickedProduct.category).trigger('change');
+		if(clickedProduct.images && clickedProduct.images.length) {
+			let image = clickedProduct.images[0];
+			imageSelector.addImagesFromPath([imageHostUrl + image]);
+			imageSelector.refreshPreviewPanel();
+		}
+	}
+
 	function add() {
 		let modal = $('#add-product-form');
 		let data = {};
@@ -12,52 +31,89 @@ let ProductManager = (function () {
 			data[key] = val;
 		});
 
-		let fileInp = modal.find('[name="images"]')[0].files;
-		let file = fileInp.length > 0 ? fileInp[0] : null;
+		// let file = modal.find('[name="images"]');
+		let f = imageSelector.cachedFileArray[0] || "";
 
-		console.log("START UPLOAD FILE");
+		// let fileInp = modal.find('[name="images"]')[0].files;
+		// let file = fileInp.length > 0 ? fileInp[0] : null;
 
 		showGBlockMessage('Adding Product...');
 
-		uploadFile(file, (err, res) => {
-			console.log("END UPLOAD FILE");
-			if(err) {
-				hideGBlockMessage('Error Uploading Image...');
-				return;
-			}
-
-			console.log("START ADD PRODUCT");
-
+		if(f) {
 			data.images = [];
-			if(res && res.length)
-				data.images = [res];
-
-			console.log("DATA==>",data);
-
-			$.ajax({
-				url: apiUrl + "api/product/add",
-				type: 'POST',
-				data: data,
-				success: function (res) {
-					console.log(res);
-					if (res.status === 'Success') {
-						// modal.find('.form-control[name]').val("");
-						modal.find('[name]').val("");
-						// modal.trigger("reset");
-						hideGBlockMessage('Product Added Successfully');
-					} else {
-						hideGBlockMessage('Error Adding Product: ' + res.message);
-					}
-				},
-				error: function (err) {
-					console.log("ERR:", err);
-					hideGBlockMessage("Error Adding Product");
+			uploadFile(new File([f], f.name), (err, res) => {
+				if (err) {
+					hideGBlockMessage('Error Uploading Image...');
+					return;
 				}
+
+				data.images = [];
+				if(res && res.length)
+					data.images = [res];
+				addOrUpdate(data, false);
 			});
+		} else {
+			addOrUpdate(data, false);
+		}
+	}
+
+	function update() {
+		let modal = $('#add-product-form');
+		let data = {};
+		modal.find('.form-control[name]').each(function (e) {
+			let key = $(this).attr('name');
+			let val = $(this).val() || "";
+			if (Array.isArray(val))
+				val = val.toString();
+			data[key] = val;
+		});
+
+		let f = imageSelector.cachedFileArray[0] || "";
+
+		if(f) {
+			data.images = [];
+			uploadFile(new File([f], f.name), (err, res) => {
+				if (err) {
+					hideGBlockMessage('Error Uploading Image...');
+					return;
+				}
+
+				data.images = [];
+				if(res && res.length)
+					data.images = [res];
+				addOrUpdate(data, true);
+			});
+		} else {
+			addOrUpdate(data, true);
+		}
+	}
+
+	function addOrUpdate(data, isUpdate = false) {
+		let modal = $('#add-product-form');
+		$.ajax({
+			url: apiUrl + `api/product/${isUpdate ? "update" : "add"}`,
+			type: 'POST',
+			data: data,
+			success: function (res) {
+				console.log(res);
+				if (res.status === 'Success') {
+					// modal.find('.form-control[name]').val("");
+					modal.find('[name]').val("");
+					// modal.trigger("reset");
+					hideGBlockMessage(isUpdate ? 'Product Updated Successfully' : 'Product Added Successfully');
+				} else {
+					hideGBlockMessage(isUpdate ? 'Error Updating Product: ' + res.message : 'Error Adding Product: ' + res.message);
+				}
+			},
+			error: function (err) {
+				console.log("ERR:", err);
+				hideGBlockMessage("Error");
+			}
 		});
 	}
 
 	function init() {
+		imageSelector = new FileUploadWithPreview('imageSelector');
 		let categorySel = $(".categoryList");
 		categorySel.select2();
 		CategoryManager.load((x) => {
@@ -67,6 +123,7 @@ let ProductManager = (function () {
 				categorySel.append(newOption);
 			});
 			categorySel.trigger('change');
+			preFillProductData();
 		});
 	}
 
@@ -95,7 +152,7 @@ let ProductManager = (function () {
 		productListGroup.empty();
 
 		$.ajax({
-			url: apiUrl + "api/product",
+			url: apiUrl + "api/product/loadAll",
 			type: 'POST',
 			data: {cid: cid},
 			success: function (res) {
@@ -105,6 +162,10 @@ let ProductManager = (function () {
 					products.forEach((p) => {
 						let temp = productListTemplate.clone();
 						temp.find('.productName').html(p.name);
+						temp.find('.productName').on('click', function () {
+							clickedProduct = p;
+							location.href = '#add-product?isUpdate=true&id=' + p._id;
+						});
 						// temp.find('.productDescription').html(p.description || "");
 						temp.find('.productPrice').html("Rs." + p.price);
 						if(p.images.length > 0)
@@ -124,7 +185,9 @@ let ProductManager = (function () {
 		init,
 		initProductList,
 		add,
+		update,
 		loadProducts,
+		preFillProductData,
 	}
 })();
 

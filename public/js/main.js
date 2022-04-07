@@ -5,7 +5,8 @@ let currentUser = null;
 let currentUserRole = 0;
 let firstLoadDone = false;
 let apiUrl = "http://localhost:3030/";
-let imageHostUrl = "https://product-manager-test-4d3a765ca6d515c15.s3.amazonaws.com/";
+let imageHostUrl = apiUrl + 'file/';
+// let imageHostUrl = "https://product-manager-test-4d3a765ca6d515c15.s3.amazonaws.com/";
 
 $.ajaxSetup({
     xhrFields: {
@@ -108,7 +109,17 @@ function cleanHash() {
 
 function getPage(cb) {
     let page = currentHash;
-    console.log("GET PAGE:" + page);
+    // console.log("GET PAGE:" + page);
+    const [hash, query] = location.href.split('#')[1].split('?');
+    const params = Object.fromEntries(new URLSearchParams(query));
+    // console.log("hash==>", hash);
+    // console.log("queryParams==>", query);
+    // console.log("jsonParams==>", params);
+    if(hash === 'add-product' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    // if(hash === 'add-category' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    // if(hash === 'add-banner' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    // if(hash === 'add-blog' && params.hasOwnProperty('id')) isUpdateProduct = true;
+
     $.ajax({
         url: "page/" + page,
         type: 'GET',
@@ -117,17 +128,23 @@ function getPage(cb) {
             // $('.datetimepicker').datetimepicker();
             $('[data-toggle="tooltip"]').tooltip();
             if (cb == null) {
-                if (page === "" || page === "#") {
+                if (hash === "" || hash === "#") {
                     console.log("DASHBOARD LOADED");
-                } else if (page === "add-category") {
+                } else if (hash === "add-category") {
                     console.log("Add Category");
-                } else if (page === "add-product") {
+                } else if (hash === "add-product") {
                     console.log("Add Product");
                     ProductManager.init();
-                } else if (page === "list-product") {
+                } else if (hash === "add-banner") {
+                    console.log("Add Banner");
+                    BannerManager.init();
+                } else if (hash === "list-product") {
                     console.log("List Products");
                     ProductManager.initProductList();
-                } else if (page === "usermanager") {
+                } else if (hash === "list-banner") {
+                    console.log("List Banners");
+                    BannerManager.initBannerList();
+                } else if (hash === "usermanager") {
                 }
                 hideGBlockMessage();
             } else {
