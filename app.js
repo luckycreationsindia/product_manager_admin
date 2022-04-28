@@ -2,8 +2,11 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
+const dotenv = require('dotenv');
 
 global.rootDir = __dirname;
+
+dotenv.config({path: './custom.env'});
 
 const indexRouter = require('./routes/index');
 
