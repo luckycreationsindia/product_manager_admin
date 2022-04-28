@@ -12,6 +12,7 @@ let ProductManager = (function () {
 		modal.find('[name="name"]').val(clickedProduct.name);
 		modal.find('[name="description"]').val(clickedProduct.description);
 		modal.find('[name="price"]').val(clickedProduct.price);
+		modal.find('[name="size"]').val(clickedProduct.size);
 		modal.find('[name="category"]').val(clickedProduct.category).trigger('change');
 		if(clickedProduct.images && clickedProduct.images.length) {
 			let image = clickedProduct.images[0];
@@ -168,6 +169,7 @@ let ProductManager = (function () {
 						});
 						// temp.find('.productDescription').html(p.description || "");
 						temp.find('.productPrice').html("Rs." + p.price);
+						temp.find('.productSize').html(p.size);
 						if(p.images.length > 0)
 							temp.find('.productImage').attr('src',imageHostUrl + p.images[0]);
 						productListGroup.append(temp);
