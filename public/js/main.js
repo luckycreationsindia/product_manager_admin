@@ -110,7 +110,14 @@ function cleanHash() {
 function getPage(cb) {
     let page = currentHash;
     // console.log("GET PAGE:" + page);
-    const [hash, query] = location.href.split('#')[1].split('?');
+    let href = location.href;
+    let [hash, query] = [];
+    if(href.indexOf('#') !== -1) {
+        [hash, query] = location.href.split('#')[1].split('?');
+    } else {
+        hash = "";
+        query = "";
+    }
     const params = Object.fromEntries(new URLSearchParams(query));
     // console.log("hash==>", hash);
     // console.log("queryParams==>", query);
