@@ -71,6 +71,8 @@ let ProductManager = (function () {
 
 		let f = imageSelector.cachedFileArray[0] || "";
 
+		showGBlockMessage('Updating Product...');
+
 		if(f) {
 			data.images = [];
 			uploadFile(new File([f], f.name), (err, res) => {
@@ -90,7 +92,7 @@ let ProductManager = (function () {
 	}
 
 	function addOrUpdate(data, isUpdate = false) {
-		let modal = $('#add-product-form');
+		if(!data.images) data.images = [];
 		$.ajax({
 			url: apiUrl + `api/product/${isUpdate ? "update" : "add"}`,
 			type: 'POST',
@@ -99,9 +101,11 @@ let ProductManager = (function () {
 				console.log(res);
 				if (res.status === 'Success') {
 					// modal.find('.form-control[name]').val("");
-					modal.find('[name]').val("");
+					$('#add-product-form').find('[name]').val("");
 					// modal.trigger("reset");
 					hideGBlockMessage(isUpdate ? 'Product Updated Successfully' : 'Product Added Successfully');
+
+					if(isUpdate) history.back();
 				} else {
 					hideGBlockMessage(isUpdate ? 'Error Updating Product: ' + res.message : 'Error Adding Product: ' + res.message);
 				}
@@ -189,7 +193,6 @@ let ProductManager = (function () {
 		add,
 		update,
 		loadProducts,
-		preFillProductData,
 	}
 })();
 

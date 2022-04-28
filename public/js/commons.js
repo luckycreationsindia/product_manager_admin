@@ -1,12 +1,14 @@
 function hideGBlockMessage(msg, ele) {
     $("#global-loader").fadeOut("slow");
+    if (!msg) msg = "Loading...";
+    $("#global-loader-message").html(msg);
     return;
     let blockele = null;
     try {
         if (ele.length > 0) blockele = ele; else blockele = $('body');
     } catch (e) {
     }
-    if (msg != null && msg != '') {
+    if (msg != null && msg !== '') {
         hideGBlockMessage();
         showGBlockMessage(msg, ele);
         setTimeout(function () {
@@ -29,8 +31,9 @@ function hideGBlockMessage(msg, ele) {
 
 function showGBlockMessage(message, ele) {
     $("#global-loader").fadeIn("slow");
-    return;
     if (!message) message = "Loading...";
+    $("#global-loader-message").html(message);
+    return;
     let blockele = null;
     try {
         if (ele.length > 0) blockele = ele; else blockele = $('body');
@@ -338,4 +341,12 @@ function uploadFile(file, cb) {
             cb(err.message);
         }
     });
+}
+
+function checkExist(idOrClass) {
+    if(idOrClass && idOrClass.length) {
+        return idOrClass;
+    } else {
+        return false;
+    }
 }

@@ -122,7 +122,7 @@ function getPage(cb) {
     // console.log("hash==>", hash);
     // console.log("queryParams==>", query);
     // console.log("jsonParams==>", params);
-    if(hash === 'add-product' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    if(hash === 'add-product') isUpdateProduct = params.hasOwnProperty('id');
     // if(hash === 'add-category' && params.hasOwnProperty('id')) isUpdateProduct = true;
     // if(hash === 'add-banner' && params.hasOwnProperty('id')) isUpdateProduct = true;
     // if(hash === 'add-blog' && params.hasOwnProperty('id')) isUpdateProduct = true;
