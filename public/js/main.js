@@ -107,6 +107,8 @@ function cleanHash() {
     if (currentHash === "") currentHash = "home";
 }
 
+let pageParams = null;
+
 function getPage(cb) {
     let page = currentHash;
     // console.log("GET PAGE:" + page);
@@ -119,6 +121,7 @@ function getPage(cb) {
         query = "";
     }
     const params = Object.fromEntries(new URLSearchParams(query));
+    pageParams = params;
     // console.log("hash==>", hash);
     // console.log("queryParams==>", query);
     // console.log("jsonParams==>", params);

@@ -1,6 +1,5 @@
 //Product Manager Start
 
-let clickedProduct = null;
 let isUpdateProduct = false;
 
 let ProductManager = (function () {
@@ -8,17 +7,22 @@ let ProductManager = (function () {
 
 	function preFillProductData() {
 		if(!isUpdateProduct) return;
-		let modal = $('#add-product-form');
-		modal.find('[name="name"]').val(clickedProduct.name);
-		modal.find('[name="description"]').val(clickedProduct.description);
-		modal.find('[name="price"]').val(clickedProduct.price);
-		modal.find('[name="size"]').val(clickedProduct.size);
-		modal.find('[name="category"]').val(clickedProduct.category).trigger('change');
-		if(clickedProduct.images && clickedProduct.images.length) {
-			let image = clickedProduct.images[0];
-			imageSelector.addImagesFromPath([imageHostUrl + image]);
-			imageSelector.refreshPreviewPanel();
-		}
+		let pid = pageParams.id;
+		loadSingleProduct(pid, function (err, product) {
+			if(err || !product) return;
+			let modal = $('#add-product-form');
+			modal.find('[name="name"]').val(product.name);
+			modal.find('[name="description"]').val(product.description);
+			modal.find('[name="price"]').val(product.price);
+			modal.find('[name="size"]').val(product.size);
+			modal.find('[name="status"]').prop('checked', product.status).trigger('change');
+			modal.find('[name="category"]').val(product.category).trigger('change');
+			if(product.images && product.images.length) {
+				let image = product.images[0];
+				imageSelector.addImagesFromPath([imageHostUrl + image]);
+				imageSelector.refreshPreviewPanel();
+			}
+		});
 	}
 
 	function add() {
@@ -154,7 +158,6 @@ let ProductManager = (function () {
 						let temp = productListTemplate.clone();
 						temp.find('.productName').html(p.name);
 						temp.find('.productName').on('click', function () {
-							clickedProduct = p;
 							location.href = '#add-product?isUpdate=true&id=' + p._id;
 						});
 						// temp.find('.productDescription').html(p.description || "");
@@ -173,12 +176,33 @@ let ProductManager = (function () {
 		});
 	}
 
+	function loadSingleProduct(pid, cb) {
+		$.ajax({
+			url: apiUrl + "api/product/" + pid,
+			type: 'GET',
+			success: function (res) {
+				console.log(res);
+				if (res.status === 'Success') {
+					cb(null, res.data);
+				} else {
+					cb("Error", res.message);
+				}
+			},
+			error: function (err) {
+				console.log("ERR:", err);
+				hideGBlockMessage("Error");
+				cb("Error", err.message);
+			}
+		});
+	}
+
 	return {
 		init,
 		initProductList,
 		add,
 		update,
 		loadProducts,
+		loadSingleProduct,
 	}
 })();
 
