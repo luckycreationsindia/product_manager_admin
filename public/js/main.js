@@ -6,7 +6,7 @@ let currentUserRole = 0;
 let firstLoadDone = false;
 let apiUrl = "http://localhost:3030/";
 let imageHostUrl = apiUrl + 'file/';
-// let imageHostUrl = "https://product-manager-test-4d3a765ca6d515c15.s3.amazonaws.com/";
+let pageParams = null;
 
 $.ajaxSetup({
     xhrFields: {
@@ -106,8 +106,6 @@ function cleanHash() {
     currentHash = page;
     if (currentHash === "") currentHash = "home";
 }
-
-let pageParams = null;
 
 function getPage(cb) {
     let page = currentHash;

@@ -15,8 +15,9 @@ let ProductManager = (function () {
 			modal.find('[name="description"]').val(product.description);
 			modal.find('[name="price"]').val(product.price);
 			modal.find('[name="size"]').val(product.size);
+			modal.find('[name="sku"]').val(product.sku);
 			modal.find('[name="status"]').prop('checked', product.status).trigger('change');
-			modal.find('[name="category"]').val(product.category).trigger('change');
+			modal.find('[name="category"]').val(product.category._id).trigger('change');
 			if(product.images && product.images.length) {
 				let image = product.images[0];
 				imageSelector.addImagesFromPath([imageHostUrl + image]);
@@ -163,6 +164,7 @@ let ProductManager = (function () {
 						// temp.find('.productDescription').html(p.description || "");
 						temp.find('.productPrice').html("Rs." + p.price);
 						temp.find('.productSize').html(p.size);
+						temp.find('.productSKU').html(p.sku);
 						if(p.images.length > 0)
 							temp.find('.productImage').attr('src',imageHostUrl + p.images[0]);
 						productListGroup.append(temp);
