@@ -15,7 +15,7 @@
 <div class="row ">
     <div class="col-lg-12">
         <div class="card" id="add-banner-form">
-            <input type="hidden" class="form-control" name="id" value="<%=id%>">
+            <input type="hidden" class="form-control" name="id" value="<%- locals.id ? id : ''%>">
             <div class="card-header">
                 <div class="card-title"><%- isUpdate ? 'Update' : 'Add New' %> Banner</div>
             </div>
@@ -24,6 +24,16 @@
                     <label class="col-md-3 form-label">Banner Name :</label>
                     <div class="col-md-9">
                         <input type="text" class="form-control" placeholder="Banner Name" name="name">
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-md-3 form-label">Status :</label>
+                    <div class="form-group col-md-9">
+                        <label class="custom-switch form-switch">
+                            <input type="checkbox" name="status" class="custom-switch-input form-control" checked>
+                            <span class="custom-switch-indicator custom-switch-indicator-lg"></span>
+                            <span class="custom-switch-description"></span>
+                        </label>
                     </div>
                 </div>
 

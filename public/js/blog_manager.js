@@ -5,14 +5,7 @@ let blogList = [];
 let BlogManager = (function () {
 	function add() {
 		let modal = $('#add-blog-form');
-		let data = {};
-		modal.find('.form-control[name]').each(function (e) {
-			let key = $(this).attr('name');
-			let val = $(this).val() || "";
-			if (Array.isArray(val))
-				val = val.toString();
-			data[key] = val;
-		});
+		let data = modal.serializeObject();
 
 		let file = modal.find('[name="images"]');
 		let f = file[0].files[0] || "";
@@ -34,14 +27,7 @@ let BlogManager = (function () {
 
 	function update() {
 		let modal = $('#add-blog-form');
-		let data = {};
-		modal.find('.form-control[name]').each(function (e) {
-			let key = $(this).attr('name');
-			let val = $(this).val() || "";
-			if (Array.isArray(val))
-				val = val.toString();
-			data[key] = val;
-		});
+		let data = modal.serializeObject();
 
 		let file = modal.find('[name="images"]');
 		let f = file[0].files[0] || "";

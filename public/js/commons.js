@@ -147,7 +147,7 @@ $.fn.serializeObject = function (cb, highlightError) {
     let f = $(this);
     let success = true;
     highlightError = highlightError || true;
-    $(this).find('input[type="hidden"], input[type="number"], input[type="email"], input[type="text"], input[type="password"], input[type="checkbox"]:checked, input[type="radio"]:checked, select, textarea')
+    $(this).find('input[type="hidden"], input[type="number"], input[type="email"], input[type="text"], input[type="password"], input[type="checkbox"], input[type="radio"], select, textarea')
         .each(
             function () {
                 if (this.name === null || this.name === undefined
@@ -169,6 +169,10 @@ $.fn.serializeObject = function (cb, highlightError) {
 
                 if ($(this).attr('outtype') === "number") {
                     elemValue = this.value ? parseInt(this.value) : null;
+                }
+
+                if ($(this).attr('type') === "checkbox") {
+                    elemValue = this.checked;
                 }
 
                 if (isDateTime) {

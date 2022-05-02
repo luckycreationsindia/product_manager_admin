@@ -23,14 +23,7 @@ let ProductManager = (function () {
 
 	function add() {
 		let modal = $('#add-product-form');
-		let data = {};
-		modal.find('.form-control[name]').each(function (e) {
-			let key = $(this).attr('name');
-			let val = $(this).val() || "";
-			if (Array.isArray(val))
-				val = val.toString();
-			data[key] = val;
-		});
+		let data = modal.serializeObject();
 
 		// let file = modal.find('[name="images"]');
 		let f = imageSelector.cachedFileArray[0] || "";
@@ -60,14 +53,7 @@ let ProductManager = (function () {
 
 	function update() {
 		let modal = $('#add-product-form');
-		let data = {};
-		modal.find('.form-control[name]').each(function (e) {
-			let key = $(this).attr('name');
-			let val = $(this).val() || "";
-			if (Array.isArray(val))
-				val = val.toString();
-			data[key] = val;
-		});
+		let data = modal.serializeObject();
 
 		let f = imageSelector.cachedFileArray[0] || "";
 
