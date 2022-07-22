@@ -6,7 +6,7 @@ const dotenv = require('dotenv');
 
 global.rootDir = __dirname;
 
-dotenv.config({path: './custom.env'});
+dotenv.config();
 
 const indexRouter = require('./routes/index');
 
@@ -22,12 +22,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
+  if(req.path.endsWith('perfect-scrollbar.js.map')) {
+    return res.status(404);
+  }
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   console.error(err);
   res.locals.message = err.message;

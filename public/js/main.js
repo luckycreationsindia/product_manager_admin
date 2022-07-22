@@ -124,7 +124,7 @@ function getPage(cb) {
     // console.log("queryParams==>", query);
     // console.log("jsonParams==>", params);
     if(hash === 'add-product') isUpdateProduct = params.hasOwnProperty('id');
-    // if(hash === 'add-category' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    if(hash === 'add-category') isUpdateCategory = params.hasOwnProperty('id');
     // if(hash === 'add-banner' && params.hasOwnProperty('id')) isUpdateProduct = true;
     // if(hash === 'add-blog' && params.hasOwnProperty('id')) isUpdateProduct = true;
 
@@ -140,12 +140,16 @@ function getPage(cb) {
                     console.log("DASHBOARD LOADED");
                 } else if (hash === "add-category") {
                     console.log("Add Category");
+                    CategoryManager.init();
                 } else if (hash === "add-product") {
                     console.log("Add Product");
                     ProductManager.init();
                 } else if (hash === "add-banner") {
                     console.log("Add Banner");
                     BannerManager.init();
+                } else if (hash === "list-category") {
+                    console.log("List Categories");
+                    CategoryManager.initCategoryList();
                 } else if (hash === "list-product") {
                     console.log("List Products");
                     ProductManager.initProductList();
