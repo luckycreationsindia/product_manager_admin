@@ -125,7 +125,7 @@ function getPage(cb) {
     // console.log("jsonParams==>", params);
     if(hash === 'add-product') isUpdateProduct = params.hasOwnProperty('id');
     if(hash === 'add-category') isUpdateCategory = params.hasOwnProperty('id');
-    // if(hash === 'add-banner' && params.hasOwnProperty('id')) isUpdateProduct = true;
+    if(hash === 'add-banner') isUpdateBanner = params.hasOwnProperty('id');
     // if(hash === 'add-blog' && params.hasOwnProperty('id')) isUpdateProduct = true;
 
     $.ajax({

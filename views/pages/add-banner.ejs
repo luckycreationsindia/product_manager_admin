@@ -50,7 +50,20 @@
                 <div class="row">
                     <label class="col-md-3 form-label mb-4">Banner Image:</label>
                     <div class="col-md-9">
-                        <input class="form-control" type="file" name="images" accept=".jpg, .png, image/jpeg, image/png">
+                        <div class="custom-file-container" data-upload-id="imageSelector">
+                            <label>Upload Image
+                                <a href="javascript:void(0)"
+                                   class="custom-file-container__image-clear"
+                                   title="Clear Image">&times;</a></label>
+                            <label class="custom-file-container__custom-file">
+                                <input class="form-control custom-file-container__custom-file__custom-file-input"
+                                       type="file" name="images"
+                                       accept=".jpg, .png, image/jpeg, image/png" aria-label="Choose Images">
+                                <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                                <span class="custom-file-container__custom-file__custom-file-control"></span>
+                            </label>
+                            <div class="custom-file-container__image-preview"></div>
+                        </div>
                     </div>
                 </div>
                 <!--End Row-->

@@ -125,7 +125,7 @@ let CategoryManager = (function () {
 							temp.find('.categoryName').on('click', function () {
 								location.href = '#add-category?isUpdate=true&id=' + c._id;
 							});
-							// temp.find('.productDescription').html(p.description || "");
+							// temp.find('.categoryDescription').html(c.description || "");
 							if(c.images.length > 0 && c.images[0] !== '')
 								temp.find('.categoryImage').attr('src', imageHostUrl + c.images[0]);
 							categoryListGroup.append(temp);
